@@ -1,7 +1,9 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired, Email, Length, EqualTo
+from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 import email_validator
+from MUNSiteCode import db
+from MUNSiteCode.models import Codes
 
 
 class LoginForm(FlaskForm):
@@ -20,3 +22,7 @@ class RegisterForm(FlaskForm):
     confirm_password = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo('password')])
     code = StringField("Access Code", validators=[DataRequired(), Length(max=50)])
     submit = SubmitField("Sign Up")
+
+    def validate_code(self, code):
+        if not db.session.query(Codes).filter_by(code=code.data).all():
+            raise ValidationError("Code is not valid")
