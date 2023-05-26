@@ -9,7 +9,7 @@ from MUNSiteCode.config import Config
 db = SQLAlchemy()
 bcrypt = Bcrypt()
 csrf = CSRFProtect()
-# login_manager = LoginManager()
+login_manager = LoginManager()
 # login_manager.login_view = "users.login"
 # login_manager.login_message_category = "info"
 
@@ -21,7 +21,7 @@ def create_app(config_class=Config):
     db.init_app(app)
     bcrypt.init_app(app)
     csrf.init_app(app)
-    # login_manager.init_app(app)
+    login_manager.init_app(app)
 
     from MUNSiteCode.Main.routes import main
     from MUNSiteCode.Posts.routes import posts

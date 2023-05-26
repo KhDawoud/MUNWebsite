@@ -1,4 +1,5 @@
 from flask import Blueprint, url_for, render_template, redirect
+from flask_login import login_user, current_user, logout_user
 from MUNSiteCode.Users.forms import LoginForm, RegisterForm
 from MUNSiteCode.models import User, Codes
 from MUNSiteCode import bcrypt, db
@@ -8,15 +9,26 @@ users = Blueprint("users", __name__)
 
 @users.route("/login", methods=["POST", "GET"])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
     template_url = url_for('users.login')
     form = LoginForm()
     if form.validate_on_submit():
-        return redirect(url_for('main.home'))
+        user = db.session.query(User).filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
+            return redirect(url_for('main.home'))
+        else:
+            form.password.errors.append("Login failed. Check password")
+            form.email.errors.append("Login failed. Check email")
+
     return render_template("login.html", template_url=template_url, form=form)
 
 
 @users.route("/register", methods=["POST", "GET"])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('main.home'))
     template_url = url_for('users.register')
     form = RegisterForm()
     if form.validate_on_submit():
@@ -29,3 +41,9 @@ def register():
         db.session.commit()
         return redirect(url_for('users.login'))
     return render_template('register.html', template_url=template_url, form=form)
+
+
+@users.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('main.home'))

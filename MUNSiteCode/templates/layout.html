@@ -14,8 +14,12 @@
           <span class="navbar-text">ALSMUN-2</span>
         </a>
         <div class="ms-auto">
-          <a class="btn btn-primary me-3" role="button" href="{{ url_for('users.login') }}">Login</a>
-          <a href="{{ url_for('users.register') }}" class="btn btn-outline-primary me-3" role="button">Sign-Up</a>
+          {% if current_user.is_authenticated %}
+            <a href="{{ url_for('users.logout') }}" class="btn btn-outline-primary me-3" role="button">Logout</a>
+          {% else %}
+            <a class="btn btn-primary me-3" role="button" href="{{ url_for('users.login') }}">Login</a>
+            <a href="{{ url_for('users.register') }}" class="btn btn-outline-primary me-3" role="button">Sign-Up</a>
+          {% endif %}
         </div>
       </div>
     </nav>
