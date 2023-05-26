@@ -10,7 +10,7 @@ class User(db.Model):
     profile_pic = db.Column(db.String(20))
     role = db.Column(db.String(20))
     country = db.Column(db.String(60))
-    code = db.Column(db.String(50), db.ForeignKey('codes.code'), nullable=False)
+    code = db.Column(db.String(50), db.ForeignKey('codes.code'), nullable=False, unique=True)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"

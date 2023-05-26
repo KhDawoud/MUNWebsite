@@ -3,7 +3,7 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 import email_validator
 from MUNSiteCode import db
-from MUNSiteCode.models import Codes
+from MUNSiteCode.models import Codes, User
 
 
 class LoginForm(FlaskForm):
@@ -24,5 +24,16 @@ class RegisterForm(FlaskForm):
     submit = SubmitField("Sign Up")
 
     def validate_code(self, code):
-        if not db.session.query(Codes).filter_by(code=code.data).all():
+        if not db.session.query(Codes).filter_by(code=code.data).first():
             raise ValidationError("Code is not valid")
+        if db.session.query(User).filter_by(code=code.data).first():
+            raise ValidationError("Code is already in use")
+
+    def validate_username(self, username):
+        if db.session.query(User).filter_by(username=username.data).first():
+            raise ValidationError("This username is taken")
+
+    def validate_email(self, email):
+        if db.session.query(User).filter_by(email=email.data).first():
+            raise ValidationError("This email is already in use")
+
