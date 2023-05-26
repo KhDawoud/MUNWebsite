@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
 <main class="text-center form-signin w-50 m-auto">
-  <form method="POST" action="{{ url_for('users.login') }}" novalidate>
+  <form method="POST" novalidate>
     {{ form.csrf_token }}
     <h1 class="h3 my-5 fw-bold">Login To Your Account</h1>
     <div class="text-muted">

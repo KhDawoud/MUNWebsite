@@ -51,6 +51,14 @@
         </ul>
       </div>
       <hr>
+      {% if current_user.is_authenticated %}
+        <div class="mx-3 mb-3">
+          <a class="d-flex align-items-center text-white text-decoration-none" aria-expanded="false" href="{{ url_for('users.account_info') }}">
+            <img src="{{ current_user.profile_pic }}" alt="profile picture" width="32" height="32" class="rounded-circle me-2">
+            <strong class="mx-1 text-white">{{ current_user.username }}</strong>
+          </a>
+        </div>
+      {% endif %}
     </div>
     <div class="container-fluid ">
       {% block content %} {% endblock %}

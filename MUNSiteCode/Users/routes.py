@@ -1,5 +1,5 @@
-from flask import Blueprint, url_for, render_template, redirect
-from flask_login import login_user, current_user, logout_user
+from flask import Blueprint, url_for, render_template, redirect, request
+from flask_login import login_user, current_user, logout_user, login_required
 from MUNSiteCode.Users.forms import LoginForm, RegisterForm
 from MUNSiteCode.models import User, Codes
 from MUNSiteCode import bcrypt, db
@@ -17,11 +17,11 @@ def login():
         user = db.session.query(User).filter_by(email=form.email.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user, remember=form.remember.data)
-            return redirect(url_for('main.home'))
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('main.home'))
         else:
             form.password.errors.append("Login failed. Check password")
             form.email.errors.append("Login failed. Check email")
-
     return render_template("login.html", template_url=template_url, form=form)
 
 
@@ -47,3 +47,11 @@ def register():
 def logout():
     logout_user()
     return redirect(url_for('main.home'))
+
+
+@users.route("/account")
+@login_required
+def account_info():
+    template_url = url_for('users.account_info')
+    return render_template('account_info.html', template_url=template_url)
+
