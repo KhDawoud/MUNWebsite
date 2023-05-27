@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block content %}
-<div class="container w-75 my-5">
+<div class="container w-100 my-5">
     <div class="row">
         <div class="col-sm-4">
             <div class="row d-flex justify-content-center">
@@ -14,8 +14,27 @@
             </div>
         </div>
         <div class="col-sm-8">
-            <h2 class="d-flex justify-content-center fw-bold"> Account Information </h2>
-            <hr>
+            <h2 class="fw-bold mt-2"> Account Information </h2>
+            <small class="text-secondary">Manage your account information, including your username and email, and view your permissions, posts and schedule. </small>
+            <div class="row mt-4">
+                <div class="col-sm-5 p-4 border border-secondary border-2 rounded me-4 d-flex flex-column mt-2" style="background-color: #2a2f36;">
+                    <h5>Name
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-person-circle ms-2" viewBox="0 0 16 16">
+                      <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                      <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                    </svg>
+                    </h5>
+                    <small class="text-secondary">{{ current_user.name }}</small>
+                </div>
+                <div class="col-sm-5 p-4 border border-secondary border-2 rounded me-4 d-flex flex-column mt-2" style="background-color: #2a2f36;">
+                    <h5>Code
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-braces ms-2" viewBox="0 0 16 16">
+  <path d="M2.114 8.063V7.9c1.005-.102 1.497-.615 1.497-1.6V4.503c0-1.094.39-1.538 1.354-1.538h.273V2h-.376C3.25 2 2.49 2.759 2.49 4.352v1.524c0 1.094-.376 1.456-1.49 1.456v1.299c1.114 0 1.49.362 1.49 1.456v1.524c0 1.593.759 2.352 2.372 2.352h.376v-.964h-.273c-.964 0-1.354-.444-1.354-1.538V9.663c0-.984-.492-1.497-1.497-1.6zM13.886 7.9v.163c-1.005.103-1.497.616-1.497 1.6v1.798c0 1.094-.39 1.538-1.354 1.538h-.273v.964h.376c1.613 0 2.372-.759 2.372-2.352v-1.524c0-1.094.376-1.456 1.49-1.456V7.332c-1.114 0-1.49-.362-1.49-1.456V4.352C13.51 2.759 12.75 2 11.138 2h-.376v.964h.273c.964 0 1.354.444 1.354 1.538V6.3c0 .984.492 1.497 1.497 1.6z"/>
+</svg>
+                    </h5>
+                    <small class="text-secondary">{{ current_user.code }}</small>
+                </div>
+            </div>
         </div>
     </div>
 </div>

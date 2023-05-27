@@ -1,6 +1,6 @@
-from MUNSiteCode import create_app, db
-from MUNSiteCode.models import User, Codes
-from secrets import token_hex
+from MUNSiteCode import create_app
+# from MUNSiteCode.models import User, Codes
+# from secrets import token_hex
 # from random import choice
 
 app = create_app()
