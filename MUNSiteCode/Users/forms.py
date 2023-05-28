@@ -1,9 +1,11 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 import email_validator
 from MUNSiteCode import db
 from MUNSiteCode.models import Codes, User
+from flask_login import current_user
 
 
 class LoginForm(FlaskForm):
@@ -36,4 +38,11 @@ class RegisterForm(FlaskForm):
     def validate_email(self, email):
         if db.session.query(User).filter_by(email=email.data).first():
             raise ValidationError("This email is already in use")
+
+
+class UpdateProfilePicForm(FlaskForm):
+    profile_pic = FileField('Profile Picture', validators=[DataRequired(), FileAllowed(["jpg", "png", "jpeg"],
+                                                                                       "File must be a PNG or JPG")])
+    submit = SubmitField('Save Changes')
+
 
