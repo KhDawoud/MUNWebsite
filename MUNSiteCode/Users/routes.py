@@ -72,6 +72,4 @@ def account_info():
         file = save_picture(form.profile_pic.data)
         current_user.profile_pic = file
         db.session.commit()
-    else:
-        print(form.errors)
     return render_template('account_info.html', template_url=template_url, form=form)
